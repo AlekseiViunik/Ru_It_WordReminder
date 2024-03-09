@@ -17,8 +17,8 @@ class Server:
 
 if __name__ == '__main__':
     load_dotenv()
-    key = os.getenv("YANDEX_SECRET")
-    endpoint = os.getenv("ENDPOINT")
-    server = Server(endpoint, key)
+    ydx_key = os.getenv("YANDEX_SECRET")
+    ydx_endpoint = os.getenv("ENDPOINT")
+    server = Server(ydx_endpoint, ydx_key)
     print(f"Endpoint is {server.endpoint}")
     print(f"Key is {server.key}")
