@@ -17,14 +17,23 @@ class Constants:
     BG_COLOR_G = 224
     BG_COLOR_B = 230
 
-    # Label
+    # Labels
+    # Main label
     LABEL_WIDTH = 380
     LABEL_HEIGHT = 180
     LABEL_X = 10
     LABEL_Y = 10
+    # Words label
+    WORDS_LABEL_WIDTH = 200
+    WORDS_LABEL_HEIGHT = 50
+    WORDS_LABEL_X = 100
+    WORDS_LABEL_Y = 50
 
     # Icon X
     ICON_X_WIDTH = 40
     ICON_X_HEIGHT = 40
     ICON_X_X = 340
     ICON_X_Y = 20
+
+    # Other
+    SLEEPING_TIME = 10
