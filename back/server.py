@@ -10,6 +10,7 @@ class Server:
         self.endpoint = os.getenv('ENDPOINT')
         self.key = os.getenv('YANDEX_SECRET')
         self.current_word = ''
+        self.full_endpoint = ''
 
     def generate_endpoint(self):
         with open("src/txtfiles/rwords.txt", "r", encoding="utf-8") as file:
@@ -17,13 +18,13 @@ class Server:
             self.current_word = random.choice(words).strip()
 
         # Construct the full endpoint URL
-        full_endpoint = f"{self.endpoint}?key={self.key}&lang=ru-it&text={self.current_word}"
-        return full_endpoint
+        self.full_endpoint = f"{self.endpoint}?key={self.key}&lang=ru-it&text={self.current_word}"
+        return self.full_endpoint
 
     def send_call(self):
         ydx_endpoint = self.generate_endpoint()
-        response = requests.get(ydx_endpoint)
-        return [response.json()['def'][0]['text'], response.json()['def'][0]['tr'][0]['text']]
+        ydx_response = requests.get(ydx_endpoint)
+        return [ydx_response.json()['def'][0]['text'], ydx_response.json()['def'][0]['tr'][0]['text']]
 
 
 if __name__ == '__main__':

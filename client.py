@@ -53,10 +53,8 @@ class MainWindow(WindowSetter):
                 self.update_result_label(response)
                 await asyncio.sleep(10)
             except IndexError as e:
-                if (not response):
-                    response = "Empty"
                 logging.error(
-                    f"{datetime.now()} IndexError: {e}, Word: {self.server.current_word}, Endpoint: {self.server.endpoint}, Response: {response}"
+                    f"{datetime.now()} IndexError: {e}, Word: {self.server.current_word}, Endpoint: {self.server.full_endpoint}"
                 )
 
     def update_result_label(self, response):
