@@ -21,9 +21,6 @@ class MainWindow(WindowSetter):
         self.server = Server()
         self.loop = None
         self.thread = None
-        self.result_label = QLabel('Waiting for result...', self)
-        self.result_label.setGeometry(self.WORDS_LABEL_X, self.WORDS_LABEL_Y, self.WORDS_LABEL_WIDTH, self.WORDS_LABEL_HEIGHT)  # Adjust position and size as needed
-        self.result_label.hide()
 
 
     def play_clicked(self):
@@ -34,7 +31,7 @@ class MainWindow(WindowSetter):
         self.run_event_loop()
 
     def stop_clicked(self):
-        """Event for PLAY button clicked."""
+        """Event for STOP button clicked."""
         self.result_label.hide()
         self.play_button.show()
         self.stop_flag = True

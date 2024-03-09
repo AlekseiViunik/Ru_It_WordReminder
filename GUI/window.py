@@ -15,7 +15,7 @@ class WindowSetter(Constants, QWidget):
         self.setPalette(palette)
         self.setStyleSheet("border: 3px solid grey; border-radius: 20px")
 
-        # Add label
+        # Add main label
         self.background_label = QLabel(self)
         self.background_label.setGeometry(self.LABEL_X, self.LABEL_Y, self.LABEL_WIDTH, self.LABEL_HEIGHT)
         self.background_label.setStyleSheet(
@@ -23,6 +23,12 @@ class WindowSetter(Constants, QWidget):
             "border: 3px solid grey; border-radius: 20px;"
             .format(self.BG_COLOR_R, self.BG_COLOR_G, self.BG_COLOR_B)
         )
+
+        # Add a label for words
+        self.result_label = QLabel('Waiting for result...', self)
+        self.result_label.setGeometry(self.WORDS_LABEL_X, self.WORDS_LABEL_Y, self.WORDS_LABEL_WIDTH,
+                                      self.WORDS_LABEL_HEIGHT)  # Adjust position and size as needed
+        self.result_label.hide()
 
         # Create PLAY button
         self.play_button = QPushButton('PLAY', self)
