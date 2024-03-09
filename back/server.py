@@ -1,5 +1,6 @@
 import os
 import random
+import requests
 
 from dotenv import load_dotenv
 
@@ -18,12 +19,13 @@ class Server:
         full_endpoint = f"{self.endpoint}?key={self.key}&lang=ru-it&text={random_word}"
         return full_endpoint
 
-    def sendcall(self):
-        # TODO: add logic to send call to Yandex endpoint to get the word's translation
-        pass
+    def send_call(self):
+        ydx_endpoint = self.generate_endpoint()
+        response = requests.get(ydx_endpoint)
+        return response.json()
 
 
 if __name__ == '__main__':
     server = Server()
-    path = server.generate_endpoint()
-    print(path)
+    response = server.send_call()
+    print(response)
