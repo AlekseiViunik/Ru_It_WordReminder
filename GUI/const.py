@@ -1,0 +1,30 @@
+class Constants:
+    # Window
+    WINDOW_WIDTH = 400
+    WINDOW_HEIGHT = 200
+    WINDOW_X = 100
+    WINDOW_Y = 100
+
+    # Buttons
+    BUTTONS_WIDTH = 100
+    BUTTONS_HEIGHT = 50
+    BUTTONS_X = 50
+    PLAY_BUTTON_Y = 50
+    STOP_BUTTON_Y = 120
+
+    # Background
+    BG_COLOR_R = 176
+    BG_COLOR_G = 224
+    BG_COLOR_B = 230
+
+    # Label
+    LABEL_WIDTH = 380
+    LABEL_HEIGHT = 180
+    LABEL_X = 10
+    LABEL_Y = 10
+
+    # Icon X
+    ICON_X_WIDTH = 40
+    ICON_X_HEIGHT = 40
+    ICON_X_X = 340
+    ICON_X_Y = 20
