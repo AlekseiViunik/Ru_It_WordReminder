@@ -22,7 +22,7 @@ class Server:
     def send_call(self):
         ydx_endpoint = self.generate_endpoint()
         response = requests.get(ydx_endpoint)
-        return response.json()
+        return [response.json()['def'][0]['text'], response.json()['def'][0]['tr'][0]['text']]
 
 
 if __name__ == '__main__':
