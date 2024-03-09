@@ -1,12 +1,17 @@
-import asyncio, os, sys, threading
-from PyQt5.QtWidgets import QApplication, QPushButton
+import asyncio, logging, os, sys, threading
+
+from datetime import datetime
+from PyQt5.QtWidgets import QApplication, QPushButton, QLabel
 from PyQt5.QtCore import QSize, QPoint
 from PyQt5.QtGui import QIcon
 
-from GUI.window import WindowSetter # Includes Constants
+from GUI.window import WindowSetter  # Includes Constants
 from back.server import Server
 
 os.environ["XDG_SESSION_TYPE"] = "xcb"
+
+# configure logging
+logging.basicConfig(filename='error.log', level=logging.ERROR, format='%(asctime)s %(message)s')
 
 
 class MainWindow(WindowSetter):
@@ -16,16 +21,21 @@ class MainWindow(WindowSetter):
         self.server = Server()
         self.loop = None
         self.thread = None
+        self.result_label = QLabel('Waiting for result...', self)
+        self.result_label.setGeometry(self.WORDS_LABEL_X, self.WORDS_LABEL_Y, self.WORDS_LABEL_WIDTH, self.WORDS_LABEL_HEIGHT)  # Adjust position and size as needed
+        self.result_label.hide()
 
 
     def play_clicked(self):
         """Event for PLAY button clicked."""
         self.play_button.hide()
+        self.result_label.show()
         self.stop_flag = False
         self.run_event_loop()
 
     def stop_clicked(self):
         """Event for PLAY button clicked."""
+        self.result_label.hide()
         self.play_button.show()
         self.stop_flag = True
 
@@ -38,11 +48,26 @@ class MainWindow(WindowSetter):
     async def poll_endpoint(self):
         """Send requests to the endpoint periodically."""
         while not self.stop_flag:
-            response = await asyncio.to_thread(self.server.send_call)
-            print(response)
-            await asyncio.sleep(10)
+            try:
+                response = await asyncio.to_thread(self.server.send_call)
+                self.update_result_label(response)
+                await asyncio.sleep(10)
+            except IndexError as e:
+                if (not response):
+                    response = "Empty"
+                logging.error(
+                    f"{datetime.now()} IndexError: {e}, Word: {self.server.current_word}, Endpoint: {self.server.endpoint}, Response: {response}"
+                )
+
+    def update_result_label(self, response):
+        """Update the text of the result label with the received response."""
+        if response:
+            self.result_label.setText(f"{response[0]} - {response[1]}")
+        else:
+            self.result_label.setText('No response received')
+
     def mousePressEvent(self, event):
-        """Set the possibility of capturing the window by mouse clicking as true."""
+        """Set the possibility of capturing the window by mouse clicking."""
         self.oldPos = event.globalPos()
 
     def mouseMoveEvent(self, event):
