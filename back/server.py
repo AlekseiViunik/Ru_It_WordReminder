@@ -11,7 +11,7 @@ class Server:
         self.key = os.getenv('YANDEX_SECRET')
 
     def generate_endpoint(self):
-        with open("../src/txtfiles/rwords.txt", "r", encoding="utf-8") as file:
+        with open("src/txtfiles/rwords.txt", "r", encoding="utf-8") as file:
             words = file.readlines()
             random_word = random.choice(words).strip()
 
