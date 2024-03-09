@@ -1,7 +1,6 @@
-import os, sys
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLabel
-from PyQt5.QtCore import Qt, QSize, QPoint
-from PyQt5.QtGui import QColor, QPalette, QFont, QIcon
+from PyQt5.QtWidgets import QWidget, QPushButton, QLabel
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QColor, QPalette, QFont
 
 from .const import Constants
 
@@ -32,6 +31,9 @@ class WindowSetter(Constants, QWidget):
             self.WORDS_LABEL_WIDTH,
             self.WORDS_LABEL_HEIGHT
         )
+        font = QFont("Arial", 14)
+        font.setBold(True)
+        self.result_label.setFont(font)
         self.result_label.setAlignment(Qt.AlignCenter)
         self.result_label.hide()
 
