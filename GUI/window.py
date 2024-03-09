@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QLabel
 from PyQt5.QtCore import Qt, QSize, QPoint
 from PyQt5.QtGui import QColor, QPalette, QFont, QIcon
 
-from const import Constants
+from .const import Constants
 
 class WindowSetter(Constants, QWidget):
     def __init__(self):
