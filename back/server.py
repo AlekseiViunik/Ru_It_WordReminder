@@ -1,14 +1,22 @@
 import os
+import random
+
 from dotenv import load_dotenv
 
 class Server:
-    def __init__(self, endpoint, key):
-        self.endpoint = endpoint
-        self.key = key
+    def __init__(self):
+        load_dotenv()
+        self.endpoint = os.getenv('ENDPOINT')
+        self.key = os.getenv('YANDEX_SECRET')
 
     def generate_endpoint(self):
-        # TODO: add logic to generate endpoint using random word from txtfiles/rwords.txt
-        pass
+        with open("../src/txtfiles/rwords.txt", "r", encoding="utf-8") as file:
+            words = file.readlines()
+            random_word = random.choice(words).strip()
+
+        # Construct the full endpoint URL
+        full_endpoint = f"{self.endpoint}?key={self.key}&lang=ru-it&text={random_word}"
+        return full_endpoint
 
     def sendcall(self):
         # TODO: add logic to send call to Yandex endpoint to get the word's translation
@@ -16,9 +24,6 @@ class Server:
 
 
 if __name__ == '__main__':
-    load_dotenv()
-    ydx_key = os.getenv("YANDEX_SECRET")
-    ydx_endpoint = os.getenv("ENDPOINT")
-    server = Server(ydx_endpoint, ydx_key)
-    print(f"Endpoint is {server.endpoint}")
-    print(f"Key is {server.key}")
+    server = Server()
+    path = server.generate_endpoint()
+    print(path)
