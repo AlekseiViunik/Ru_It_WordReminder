@@ -24,9 +24,9 @@ class Constants:
     LABEL_X = 10
     LABEL_Y = 10
     # Words label
-    WORDS_LABEL_WIDTH = 200
+    WORDS_LABEL_WIDTH = 300
     WORDS_LABEL_HEIGHT = 50
-    WORDS_LABEL_X = 100
+    WORDS_LABEL_X = 50
     WORDS_LABEL_Y = 50
 
     # Icon X
