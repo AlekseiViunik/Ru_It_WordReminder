@@ -26,8 +26,13 @@ class WindowSetter(Constants, QWidget):
 
         # Add a label for words
         self.result_label = QLabel('Waiting for result...', self)
-        self.result_label.setGeometry(self.WORDS_LABEL_X, self.WORDS_LABEL_Y, self.WORDS_LABEL_WIDTH,
-                                      self.WORDS_LABEL_HEIGHT)  # Adjust position and size as needed
+        self.result_label.setGeometry(
+            self.WORDS_LABEL_X,
+            self.WORDS_LABEL_Y,
+            self.WORDS_LABEL_WIDTH,
+            self.WORDS_LABEL_HEIGHT
+        )
+        self.result_label.setAlignment(Qt.AlignCenter)
         self.result_label.hide()
 
         # Create PLAY button
