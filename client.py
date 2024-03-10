@@ -21,6 +21,7 @@ class MainWindow(WindowSetter):
         self.server = Server()
         self.loop = None
         self.thread = None
+        self.options_shown = False
 
 
     def play_clicked(self):
@@ -71,6 +72,25 @@ class MainWindow(WindowSetter):
         self.move(self.x() + delta.x(), self.y() + delta.y())
         self.oldPos = event.globalPos()
 
+    def options_clicked(self):
+        """Event for OPTIONS button clicked."""
+        if not self.options_shown:
+            self.options_button.setIcon(QIcon('src/icons/back_icon.png'))
+            self.options_button.clicked.disconnect()
+            self.options_button.clicked.connect(self.back_clicked)
+            self.play_button.hide()
+            self.stop_button.hide()
+            self.options_shown = True
+
+    def back_clicked(self):
+        """Event for BACK button clicked."""
+        if self.options_shown:
+            self.options_button.setIcon(QIcon('src/icons/options_icon.png'))
+            self.options_button.clicked.disconnect()
+            self.options_button.clicked.connect(self.options_clicked)
+            self.play_button.show()
+            self.stop_button.show()
+            self.options_shown = False
 
     def enterEvent(self, event):
         """Shows close button when mouse is in the window."""
@@ -91,6 +111,7 @@ class MainWindow(WindowSetter):
             self.options_button.setIconSize(QSize(self.OPT_ICON_WIDTH, self.OPT_ICON_HEIGHT))
             self.options_button.setGeometry(self.OPT_ICON_X, self.OPT_ICON_Y, self.OPT_ICON_WIDTH, self.OPT_ICON_HEIGHT)
             self.options_button.setStyleSheet("border: none")
+            self.options_button.clicked.connect(self.options_clicked)
             self.options_button.show()
 
     def leaveEvent(self, event):
