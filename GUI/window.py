@@ -10,7 +10,7 @@ class WindowSetter(Constants, QWidget):
 
         # Setting BG color and border style
         palette = self.palette()
-        palette.setColor(QPalette.Window, QColor(self.BG_COLOR_R, self.BG_COLOR_G, self.BG_COLOR_B))  # Бирюзовый фон
+        palette.setColor(QPalette.Window, QColor(self.BG_COLOR_R, self.BG_COLOR_G, self.BG_COLOR_B))
         self.setPalette(palette)
         self.setStyleSheet("border: 3px solid grey; border-radius: 20px")
 
@@ -55,6 +55,7 @@ class WindowSetter(Constants, QWidget):
         self.setGeometry(self.WINDOW_X, self.WINDOW_Y, self.WINDOW_WIDTH, self.WINDOW_HEIGHT)
 
         self.close_button = None  # Set close button invisible for a start
+        self.options_button = None  # Set close button invisible for a start
         self.oldPos = self.pos()  # Old window position
 
         # Hide top panel

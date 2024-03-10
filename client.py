@@ -84,12 +84,23 @@ class MainWindow(WindowSetter):
             self.close_button.clicked.connect(self.close)  # By pressing close button, the window closes
             self.close_button.show()
 
+        if not self.options_button:
+            self.options_button = QPushButton('', self)
+            options_icon = QIcon('src/icons/options_icon.png')  # Path to the options button icon
+            self.options_button.setIcon(options_icon)
+            self.options_button.setIconSize(QSize(self.OPT_ICON_WIDTH, self.OPT_ICON_HEIGHT))
+            self.options_button.setGeometry(self.OPT_ICON_X, self.OPT_ICON_Y, self.OPT_ICON_WIDTH, self.OPT_ICON_HEIGHT)
+            self.options_button.setStyleSheet("border: none")
+            self.options_button.show()
+
     def leaveEvent(self, event):
         """Hides close button when mouse is out of the window."""
         if self.close_button:
             self.close_button.deleteLater()
             self.close_button = None
-
+        if self.options_button:
+            self.options_button.deleteLater()
+            self.options_button = None
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
