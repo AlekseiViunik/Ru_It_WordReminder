@@ -1,8 +1,8 @@
 import asyncio, logging, os, sys, threading
 
 from datetime import datetime
-from PyQt5.QtWidgets import QApplication, QPushButton, QLabel
-from PyQt5.QtCore import QSize, QPoint
+from PyQt5.QtWidgets import QApplication, QPushButton, QLabel, QLineEdit
+from PyQt5.QtCore import QSize, QPoint, Qt
 from PyQt5.QtGui import QIcon
 
 from GUI.window import WindowSetter  # Includes Constants
@@ -46,14 +46,9 @@ class MainWindow(WindowSetter):
     async def poll_endpoint(self):
         """Send requests to the endpoint periodically."""
         while not self.stop_flag:
-            try:
-                response = await asyncio.to_thread(self.server.send_call)
-                self.update_result_label(response)
-                await asyncio.sleep(10)
-            except IndexError as e:
-                logging.error(
-                    f"{datetime.now()} IndexError: {e}, Word: {self.server.current_word}, Endpoint: {self.server.full_endpoint}"
-                )
+            response = await asyncio.to_thread(self.server.send_call)
+            self.update_result_label(response)
+            await asyncio.sleep(10)
 
     def update_result_label(self, response):
         """Update the text of the result label with the received response."""
@@ -72,26 +67,6 @@ class MainWindow(WindowSetter):
         self.move(self.x() + delta.x(), self.y() + delta.y())
         self.oldPos = event.globalPos()
 
-    def options_clicked(self):
-        """Event for OPTIONS button clicked."""
-        if not self.options_shown:
-            self.options_button.setIcon(QIcon('src/icons/back_icon.png'))
-            self.options_button.clicked.disconnect()
-            self.options_button.clicked.connect(self.back_clicked)
-            self.play_button.hide()
-            self.stop_button.hide()
-            self.options_shown = True
-
-    def back_clicked(self):
-        """Event for BACK button clicked."""
-        if self.options_shown:
-            self.options_button.setIcon(QIcon('src/icons/options_icon.png'))
-            self.options_button.clicked.disconnect()
-            self.options_button.clicked.connect(self.options_clicked)
-            self.play_button.show()
-            self.stop_button.show()
-            self.options_shown = False
-
     def enterEvent(self, event):
         """Shows close button when mouse is in the window."""
         if not self.close_button:
@@ -104,24 +79,13 @@ class MainWindow(WindowSetter):
             self.close_button.clicked.connect(self.close)  # By pressing close button, the window closes
             self.close_button.show()
 
-        if not self.options_button:
-            self.options_button = QPushButton('', self)
-            options_icon = QIcon('src/icons/options_icon.png')  # Path to the options button icon
-            self.options_button.setIcon(options_icon)
-            self.options_button.setIconSize(QSize(self.OPT_ICON_WIDTH, self.OPT_ICON_HEIGHT))
-            self.options_button.setGeometry(self.OPT_ICON_X, self.OPT_ICON_Y, self.OPT_ICON_WIDTH, self.OPT_ICON_HEIGHT)
-            self.options_button.setStyleSheet("border: none")
-            self.options_button.clicked.connect(self.options_clicked)
-            self.options_button.show()
+        self.close_button.show()
 
     def leaveEvent(self, event):
         """Hides close button when mouse is out of the window."""
         if self.close_button:
             self.close_button.deleteLater()
             self.close_button = None
-        if self.options_button:
-            self.options_button.deleteLater()
-            self.options_button = None
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
