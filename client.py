@@ -1,8 +1,11 @@
-import asyncio, logging, os, sys, threading
+import asyncio
+import logging
+import os
+import sys
+import threading
 
-from datetime import datetime
-from PyQt5.QtWidgets import QApplication, QPushButton, QLabel, QLineEdit
-from PyQt5.QtCore import QSize, QPoint, Qt
+from PyQt5.QtWidgets import QApplication, QPushButton
+from PyQt5.QtCore import QSize, QPoint
 from PyQt5.QtGui import QIcon
 
 from GUI.window import WindowSetter  # Includes Constants
@@ -11,7 +14,9 @@ from back.server import Server
 os.environ["XDG_SESSION_TYPE"] = "xcb"
 
 # configure logging
-logging.basicConfig(filename='error.log', level=logging.ERROR, format='%(asctime)s %(message)s')
+logging.basicConfig(
+    filename='error.log', level=logging.ERROR, format='%(asctime)s %(message)s'
+)
 
 
 class MainWindow(WindowSetter):
@@ -22,7 +27,6 @@ class MainWindow(WindowSetter):
         self.loop = None
         self.thread = None
         self.options_shown = False
-
 
     def play_clicked(self):
         """Event for PLAY button clicked."""
@@ -40,7 +44,10 @@ class MainWindow(WindowSetter):
     def run_event_loop(self):
         """Starts the asyncio event loop in a separate thread."""
         self.loop = asyncio.new_event_loop()
-        self.thread = threading.Thread(target=self.loop.run_until_complete, args=(self.poll_endpoint(),))
+        self.thread = threading.Thread(
+            target=self.loop.run_until_complete,
+            args=(self.poll_endpoint(),)
+        )
         self.thread.start()
 
     async def poll_endpoint(self):
@@ -71,12 +78,21 @@ class MainWindow(WindowSetter):
         """Shows close button when mouse is in the window."""
         if not self.close_button:
             self.close_button = QPushButton('', self)
-            close_icon = QIcon('src/icons/close_icon.png')  # Path to the close button icon
+
+            # Path to the close button icon
+            close_icon = QIcon('src/icons/close_icon.png')
             self.close_button.setIcon(close_icon)
-            self.close_button.setIconSize(QSize(self.ICON_X_WIDTH, self.ICON_X_HEIGHT))
-            self.close_button.setGeometry(self.ICON_X_X, self.ICON_X_Y, self.ICON_X_WIDTH, self.ICON_X_HEIGHT)
+            self.close_button.setIconSize(
+                QSize(self.ICON_X_WIDTH, self.ICON_X_HEIGHT)
+            )
+            self.close_button.setGeometry(
+                self.ICON_X_X,
+                self.ICON_X_Y,
+                self.ICON_X_WIDTH,
+                self.ICON_X_HEIGHT
+            )
             self.close_button.setStyleSheet("border: none")
-            self.close_button.clicked.connect(self.close)  # By pressing close button, the window closes
+            self.close_button.clicked.connect(self.close)
             self.close_button.show()
 
         self.close_button.show()
@@ -86,6 +102,7 @@ class MainWindow(WindowSetter):
         if self.close_button:
             self.close_button.deleteLater()
             self.close_button = None
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
